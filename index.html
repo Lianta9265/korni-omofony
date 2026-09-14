@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f4fbf8">
+  <title>Опасные корни — тренажёр ЕГЭ</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="aurora aurora-one"></div><div class="aurora aurora-two"></div>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">К</span><div><strong>Опасные корни</strong><small>интерактивный тренажёр ЕГЭ</small></div></div>
+    <div class="top-progress"><span id="progressText">0 из 0</span><div class="progress-track"><i id="progressBar"></i></div></div>
+  </header>
+
+  <main class="layout">
+    <section class="workspace">
+      <div class="slide-head">
+        <div><span class="eyebrow">КАРТОЧКА <b id="slideNumber">1</b></span><h1>Выберите букву и проверочное слово</h1></div>
+        <span id="stateBadge" class="badge">Не завершена</span>
+      </div>
+
+      <article id="exercise" class="exercise">
+        <figure id="stickerFrame" class="sticker-frame"><img id="cardImage" alt="Учебная карточка"><figcaption id="imageCaption" class="image-caption" hidden></figcaption></figure>
+        <div class="questions">
+          <fieldset id="letterField"><legend><span>1</span> Вставьте букву</legend><div id="letterOptions" class="letter-options"></div><p id="letterFeedback" class="feedback muted">Выберите один вариант.</p></fieldset>
+          <fieldset id="checkField"><legend><span>2</span> <b id="checkPrompt">Найдите проверочное слово</b></legend><p id="checkHint" class="hint">Можно выбрать несколько вариантов.</p><div id="checkOptions" class="check-options"></div><p id="checkFeedback" class="feedback muted">Отметьте подходящие слова.</p></fieldset>
+          <button id="checkButton" class="primary-button">Проверить <span>✓</span></button>
+        </div>
+      </article>
+
+      <nav class="controls" aria-label="Навигация по карточкам">
+        <button id="previousButton" class="secondary-button">← Назад</button>
+        <div class="page-jump"><button id="jumpBack" aria-label="Предыдущая группа">‹</button><div id="pageDots"></div><button id="jumpForward" aria-label="Следующая группа">›</button></div>
+        <button id="nextButton" class="secondary-button">Дальше →</button>
+      </nav>
+      <div class="reset-row"><button id="resetSlide" class="text-button">↻ Сбросить слайд</button><span id="sourceNote"></span></div>
+    </section>
+
+    <aside class="sidebar">
+      <section class="score-card">
+        <div class="score-ring"><strong id="scorePercent">0%</strong><span>готово</span></div>
+        <div class="score-copy"><h2>Ваш результат</h2><p><b id="doneCount">0</b> карточек завершено</p><p><b id="partCount">0</b> верных частей</p></div>
+      </section>
+      <section class="journal-card">
+        <div class="section-title"><div><span class="eyebrow">РАБОТА НАД ОШИБКАМИ</span><h2>Журнал ошибок</h2></div><span id="errorCount" class="counter">0</span></div>
+        <div id="journal" class="journal"></div>
+      </section>
+      <button id="resetAll" class="danger-button">Сбросить весь прогресс</button>
+    </aside>
+  </main>
+  <script src="data/cards.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
