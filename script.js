@@ -6,11 +6,15 @@
   const KEY = 'korni-omofony-trainer-v7';
   const PAGE_SIZE = 7;
   const shuffled = values => {const result=[...values];for(let i=result.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]]}return result};
-  const freshOrders = () => cards.map(card => ({letters:shuffled(card.letterOptions),checks:shuffled(card.checkOptions)}));
+  const freshOrder = card => ({letters:shuffled(card.letterOptions),checks:shuffled(card.checkOptions)});
+  const freshOrders = () => cards.map(freshOrder);
+  const sameOptions = (saved,current) => Array.isArray(saved)&&saved.length===current.length&&[...saved].sort().every((value,index)=>value===[...current].sort()[index]);
   const freshProgress = () => cards.map(card => ({letter:null,checks:[],checkInput:'',letterLocked:false,checksLocked:false,letterCorrect:false,checksCorrect:false,letterMessage:'Выберите один вариант.',checkMessage:card.checkMode==='input'?'Введите проверочное слово.':'Отметьте подходящие слова.'}));
   let state = {current:0,progress:freshProgress(),journal:[],orders:freshOrders()};
   try { const saved=JSON.parse(localStorage.getItem(KEY)); if(saved?.progress?.length===cards.length) state=saved; } catch (_) {}
-  if(!Array.isArray(state.orders)||state.orders.length!==cards.length) state.orders=freshOrders();
+  if(!Array.isArray(state.orders)) state.orders=[];
+  cards.forEach((card,index)=>{const order=state.orders[index];if(!order||!sameOptions(order.letters,card.letterOptions)||!sameOptions(order.checks,card.checkOptions))state.orders[index]=freshOrder(card)});
+  state.orders.length=cards.length;
   state.progress.forEach(item=>{if(typeof item.checkInput!=='string')item.checkInput=''});
   const $ = id => document.getElementById(id);
   const el = {exercise:$('exercise'),frame:$('stickerFrame'),image:$('cardImage'),caption:$('imageCaption'),number:$('slideNumber'),badge:$('stateBadge'),letters:$('letterOptions'),checks:$('checkOptions'),checkPrompt:$('checkPrompt'),checkHint:$('checkHint'),lf:$('letterFeedback'),cf:$('checkFeedback'),prev:$('previousButton'),next:$('nextButton'),dots:$('pageDots'),bar:$('progressBar'),progress:$('progressText'),done:$('doneCount'),parts:$('partCount'),percent:$('scorePercent'),journal:$('journal'),errors:$('errorCount'),source:$('sourceNote'),jumpBack:$('jumpBack'),jumpForward:$('jumpForward')};
